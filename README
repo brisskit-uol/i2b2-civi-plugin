@@ -1,0 +1,12 @@
+#============================================================================
+# Maven build instructions
+#============================================================================
+When you checkout for development, ensure you have SNAPSHOT within the pom's
+version number. Any deploy without SNAPSHOT in the version number will 
+attempt to deploy to the Release repository.
+
+To build and install to your local repository, from the command line:
+> mvn clean install
+
+To build and deploy to the BRISSKit remote repository, from the command line:
+> mvn clean deploy

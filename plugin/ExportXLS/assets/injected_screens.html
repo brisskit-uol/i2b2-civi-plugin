@@ -1,0 +1,191 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--
+  2011-07-18: added clarifications [S. Wayne Chan, Biomedical Research Informatics Development Group, HIIS Div., QHS Dept., Univversity of Massachusetts Medical School (UMMS)]
+  2011-08-17: changed the absolute path to relative path in referencing /export-files/SaveToExcel.php [W.Chan & P.Ranauro, Bio-Medical Informatics (BMI) Team, UMMS]  
+  2012-02-17: updated compatibilities info & added more relevant details [W.Chan, BMI-Core, UMMS]  
+-->
+<html>
+	<body>
+
+		<div id='ExportXLS-mainDiv'>
+
+			<div id="ExportXLS-TABS" class="yui-navset">
+				<ul class="yui-nav">
+					<li id="ExportXLS-TAB0" class="selected"><a href="#ExportXLS-TAB0"><em>Specify Data</em></a></li>
+					<li id="ExportXLS-TAB1"><a href="#ExportXLS-TAB1"><em>View Results</em></a></li>
+					<li id="ExportXLS-TAB2"><a href="#ExportXLS-TAB2"><em>Plugin Help</em></a></li>
+				</ul>
+				<div class="yui-content" id="ExportXLS-CONTENT">
+					<div>
+						<div class="ExportXLS-MainContent">
+							<div class="ExportXLS-MainContentPad">
+								<div>Drop a Patient Set and one or more Concepts (Ontology Terms) onto the relevant input boxes below, and then click the "View Results" tab to retrieve information about what in those concept was observed in the selected patient set. <br><br>In this plugin, the results are returned in a table format.</div> 
+								<div class="droptrgtlbl">Patient Set:</div>
+								<div class="droptrgt SDX-PRS" id="ExportXLS-PRSDROP">Drop a Patient Set here</div>
+								<div class="droptrgtlbl">Concept(s):</div>
+								<div class="droptrgt SDX-CONCPT" id="ExportXLS-CONCPTDROP"><div class="concptItem">Drop one or more Concepts here</div></div>
+								<div id="ExportXLS-DeleteMsg">Click a concept to remove it from the list.</div>
+								<div class="patDim" id="ExportXLS-PATDIM">Include Patient Data:</div>
+								<div class="outputOptions">
+									<form>
+										<span><input type="checkbox" checked id="ExportXLS-OutputPatient" onChange="i2b2.ExportXLS.chgOutputOption(this,'patients');"></span>
+									</form>
+								</div>
+								<div><p></div>
+								<div><p><hr size="1" noshade></div>
+								<div><p><p><b>Suggestion:</b><br>For best results, select finer-grained concepts that may not be related to multiple non-exclusive observations in patients.  For example, while a patient set may be for <i>Circulatory system</i>, selecting several concepts like <i>Hypertensive disease</i>, <i>Ischemic heart disease</i>, and  <i>arterial vascular disease</i>, etc. would result in more meaningful results than simply specifying a single concept of <i>Circulatory system</i>.</div> 
+							</div>
+						</div>
+					</div>
+					<div>
+						<div class="ExportXLS-MainContent">
+							<div class="results-directions">Please return to the "Specify Data" tab and select both a Patient Set and one or more Concepts.</div>
+							<div class="results-working" style="display:none;"><br><br>Retrieving data and creating the Table, please wait ...<br><br><br><br><br><img src="./export-files/loading.gif"></div>
+							<div class="results-finished" style="display:none;">
+								<div class="results-text"><UL></UL></div>
+								<div id="ExportXLS-InfoPDO"> 
+									<div class="results-export" style="display:none;">
+										<form action="./export-files/SaveToExcel.php?ext=patient-concepts" method="post" target="_blank" onsubmit='$j("#datatodisplay").val( $j("<div>").append( $j("#ReportTable").eq(0).clone() ).html() )'>
+											&nbsp;&nbsp;&nbsp;Click the [Excel Export] button to download the following table into an Excel file.&nbsp;&nbsp;<input type="image" src="./export-files/exportBtn.png">
+											<input type="hidden" id="datatodisplay" name="datatodisplay">
+										</form>	
+
+<!-- Civi -->
+
+&nbsp;&nbsp;&nbsp;Click the [Civi Export] button to export cohort into civicrm
+<input type="image" src="./export-files/civiBtn.png" onclick="mvf1()"/>
+<br></br>
+&nbsp;&nbsp;&nbsp;
+<label id="costlabel" name="costlabel">(Once clicked please be patient and wait for an alert that shows complete. Then view cohort.)</label>
+<br></br>
+&nbsp;&nbsp;&nbsp;
+<a href="http://demo.brisskit.le.ac.uk/civicrm/civicrm/group?reset=1" target="_blank">view cohorts</a>
+<label id="costlabel" name="costlabel">(cohorts are timestamped in civi, please note the time)</label>
+
+<!-- Civi -->
+
+
+
+									</div>
+									
+									
+									
+									<script>
+									/*									
+									$j('#myButton').click(function(){										
+									  alert($j("#datatodisplay").val( $j("<div>").append( $j("#ReportTable").eq(0).clone() ).html() ));								
+									});
+									*/							
+									</script>
+									
+									<div class="results-export" style="display:none;">				
+									    <input type="button" id="myButton" value="export to civi" />			
+									</div>
+									
+									
+									
+									
+									
+									
+									<table>
+										<!--<tr><th>PDO Request</th><td class="InfoPDO-Request"><div class="originalXML"></div></td></tr> -->
+										<!--<tr><th>PDO Response</th><td class="InfoPDO-Response"><div class="originalXML"></div></td></tr> -->
+										<tr>
+											<td class="InfoPDO-Response">
+												<div class="originalXML">
+												</div>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							
+						</div> 
+					</div>
+					<div>
+						<div class="ExportXLS-MainContent">
+							<div class="ExportXLS-MainContentPad">
+								<h1>Introduction</h1>
+								This plugin provides the following functions:
+								<ol>
+								  <li>Tabulates any selected Concepts (Ontology terms) relevant (observed on) to a set of selected Patients.</li>
+								  <li>Optionally displays relevant unidentified Patient data.</li>
+								  <li>Exports aforementioned tabulated data into an Excel spreadsheet file conveniently.</li>
+								</ol>
+								<p>
+								<h1>Instructions</h1>
+								<ol>
+								  <li>Navigate to the "Specify Data" tab. Then, drag and drop a Patient Set and one or more Concepts (Ontology Term) onto the input boxes.<br>
+								  <li>Check or uncheck the <i>Include Patient Data</i> box if you want to include the relevant non-identifying information for each patient.<br>
+								  <li>Finally, click the "View Results" tab to view the table of the observations.
+								</ol>
+                                                                <p>
+								<h1>Usage Case Suggestion</h1>
+								Currently the resulting table will only include the first observation from the selected concept (among the many possible if a selected concept is very broad) associated with each patient.  In other words, if a selected concept contains multiple subconcepts (e.g. <i>Circulatory system</i>), the resulting row, for a patient, will contain only the first observation (e.g. <i>Hypertensive disease</i>), and ignore other observations (e.g. <i>Ischemic heart disease</i>, <i>arterial vascular disease</i>, etc.) that happen to be also observed in a particular patient.<br><br>
+								Note that including all possible observations corresponding to a selected concept for a patient may result in rather complicated and confusing data, and may not be too useful.<br><br>
+								It's therefore important to exercise prudence, and select finer-grained concepts that may not be related to multiple non-exclusive observations in patients.  For example, while a patient set may be for <i>Circulatory system</i>, selecting several concepts like <i>Hypertensive disease</i>, <i>Ischemic heart disease</i>, and  <i>arterial vascular disease</i>, etc. would result in more meaningful results than simply specifying a single concept of <i>Circulatory system</i>.
+                                                                <p>
+								<h1>Browser Compatibilities</h1>
+								<ul>
+								  <li>This plugin works on the following browsers: Firefox (v.4.0.1), Chrome (v.12.0.742.122), Safari (v.5.0.5), and 
+								  Internet Explorer (v.8.0 & v.9.0.1).
+								  <li>The i2b2 Web client itself does not work on the following browser: Opera (v.11.50).
+								</ul>
+								<p>
+								<h1>i2b2 version compatibilities</h1>
+								This version (v.2.0) of this plugin is compatible with i2b2 v.1.3-1.6.
+								<p>
+								<h1>Version History of this Plugin</h1>
+								<table style="border-collapse:collapse; text-align:justify">
+								 <tr>
+								  <td valign="top" style="border:1px solid black; padding:4px">1.0</td>
+								  <td style="border:1px solid black; padding-left:4px">
+								   Initial release, for i2b2 v1.5. <br/><small>By Mauro Bucalo, Universita' di Pavia, Italy.</small>
+								  </td>
+								  <td valign="top" style="border:1px solid black; padding:4px">June 2011</td>
+ 								 </tr>
+								 <tr>
+								  <td valign="top" style="border:1px solid black; padding:4px">1.6</td>
+								  <td style="border:1px solid black; padding:4px">
+								   Updated for i2b2 v1.6. <br/><small>By Mauro Bucalo, Universita' di Pavia, Italy.</small>
+								  </td>
+								  <td valign="top" style="border:1px solid black; padding:4px">Jan. 2012</td>
+ 								 </tr>
+								 <tr>
+								  <td valign="top" style="border:1px solid black; padding:4px">2.0</td>
+								  <td style="border:1px solid black; padding:4px">
+								   Updated for i2b2 v1.3-1.6, Internet Explorer compatibilities; added flexible column exclusion, table title & caption, leading row 								           count column, and other enhancements. <br/>
+								   <small>By Wayne Chan, Rajani Sadasivam, Thomas Houston, & the rest of the BMI-Core, University of Massachusetts Medical School,
+								   Worcester; and Mauro Bucalo, Universita' di Pavia, Italy.</small>
+        							  </td>
+								  <td valign="top" style="border:1px solid black; padding:4px">Feb. 2012</td>
+ 								 </tr>
+								</table>
+								<p>
+								<h1>About Us</h1>
+								<ul>
+								  <li>This plugin was created by Mauro Bucalo, Universita' di Pavia, Italy, June 2011; <small>based on the ExamplePDO plugin, by Nick
+								      Benik & Griffin Weber, Sept. 2008.</small><br>
+								  <li>The current version was released as a collaboration between the University of Massachusetts Medical School, Worcester (S. Wayne 	
+								      Chan, Rajani Sadasivam, Thomas Houston, & the rest of the BMI-Core), and the Universita' di Pavia, Italy (Mauro Bucalo).
+								</ul>
+								<i><code><small>Copyright 2012 University of Massachusetts Medical School & Universita' di Pavia.</small></code></i>  
+								<p>
+								<h1>Terms of Use</h1>
+								This plugin is published under the <a href="http://www.gnu.org/licenses/gpl.txt" target="_blank">GNU GPL v3 license</a>.
+                                        			<br/><br/>  
+								This software is distributed as a plugin to the i2b2 v1.3-1.6  webclient framework, and may be used free of charge.  It is distributed
+								in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+								PARTICULAR PURPOSE.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+
+
+	</body>
+</html>

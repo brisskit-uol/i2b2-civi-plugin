@@ -1,0 +1,92 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.brisskit.app.i2b2</groupId>
+	<artifactId>i2b2-civi-plugin</artifactId>
+	<!--+
+	    |  Please consult the project's README
+	    +-->
+	<name>Civi plugin for i2b2</name>
+	<version>1.0-SNAPSHOT</version>
+
+	<description>This represents a part of the i2b2 web client</description>
+
+	<!--+
+	    | The distributionManagement element is required for deploying an artifact to a remote repository
+	    +-->
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<name>Brisskit Maven Releases</name>
+			<url>scpexe://maven.brisskit.org/var/local/brisskit/sonatype-work/nexus/storage/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Brisskit Maven Snapshots</name>
+			<url>scpexe://maven.brisskit.org/var/local/brisskit/sonatype-work/nexus/storage/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<repositories>
+    	<repository>
+			<id>nexus</id>
+			<name>Brisskit Maven Repo</name>
+			<url>http://maven.brisskit.org/nexus/content/groups/public</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+   </repositories>
+	
+	<properties>
+		<!--+
+		    | The default environment is production. 
+		    + -->
+		<environment.type>production</environment.type>
+	</properties>
+	
+	<build>
+	
+		<plugins>
+            
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>assembly/${environment.type}-bin.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
+		</plugins>
+
+	</build>
+
+
+	<profiles>
+		<profile>
+			<id>production</id>
+			<activation>
+				<property>
+					<name>environment.type</name>
+					<value>production</value>
+				</property>
+			</activation>
+		</profile>
+	</profiles>
+
+	<packaging>pom</packaging>
+	
+</project>

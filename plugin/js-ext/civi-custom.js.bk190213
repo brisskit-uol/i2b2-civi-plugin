@@ -1,0 +1,129 @@
+var cohort = '';
+
+function mvf1()
+{
+
+//h1 = $j("#datatodisplay").val( $j("<div>").append( $j("#ReportTable").eq(0).clone() ).html() );
+//h2 = $j("#datatodisplay").val( $j("<div>").append( $j("#ReportTable").eq(0).clone() ).outerHTML );
+//h3 = $j("#datatodisplay").val( $j("<div>").append( $j("#ReportTable").eq(0).clone() ).innerHTML );
+//h4 = $j("#ReportTable").html() ;
+//h5 = $j("#ReportTable").outerHTML ;
+//h6 = $j("#ReportTable").innerHTML ;
+
+//alert(h1);
+//alert(h2);
+//alert(h3);
+//alert(h4);
+//alert(h5);
+//alert(h6);
+
+//var patientNr = 0;
+
+//$j(xmlDoc).find('patient').each(function() {
+//patientNr = patientNr + 1;
+//var patientNrArr = "pat" + patientNr;
+//patientId = $j(this).find('patient_id').text();       
+//alert(patientId);
+//}
+
+
+       //$j("#costlabel").text( "1 " + cohort.substr(0,cohort.length-1));
+
+	//$j.get("http://localhost:8080/i2b2WS/rest/service/i2b2callback1", {"incomingXML":cohort1}, function (response){alert(response);});
+
+
+
+
+	/*
+	$j.get("http://localhost:8080/i2b2WS/rest/service/i2b2callback1/{"+cohort.substr(0,cohort.length-1)+"}", 
+
+	function (response){
+
+	$j("#costlabel").text(response + "2" + cohort.substr(0,cohort.length-1));
+
+	alert(response);
+	if (response == "success") 
+	{ 
+	$j("#costlabel").text(response + " " + cohort.substr(0,cohort.length-1));
+	}
+	else
+	{
+	$j("#costlabel").text(response + " " + cohort.substr(0,cohort.length-1));
+	}
+
+	});
+	*/
+
+	if (cohort != "")
+	{
+		
+	/*
+		 var jqxhr = $.ajax({
+			type: "GET",
+			url: "http://" + window.location.hostname  + ":8080/i2b2WS/rest/service/i2b2callback1/"+cohort.substr(0,cohort.length-1)+"",
+			dataType: "text"
+			}).done(function(html) {  alert("success");
+            var responseDoc = $(html);
+            })
+			.always(function(html)
+			{
+			var responseDoc = $(html);
+			alert("complete")
+			cohort="";
+			});
+		*/
+			
+		
+		
+		
+	    var jqxhr = $j.ajax("http://" + window.location.hostname  + ":8080/i2b2WS/rest/service/i2b2callback1/"+cohort.substr(0,cohort.length-1)+"" )
+	    .done(function(html) {  alert("success");
+	                            var responseDoc = $(html);
+	                          })
+	    .always(function(html)
+	    {
+	        var responseDoc = $(html);
+	        alert("complete")
+	        cohort="";
+	    });
+	    
+		
+	}
+	else
+	{
+	    alert("This cohort has no patients, or you may have already exported");
+	}
+	
+	/*
+	$j.ajax({
+	  url: 'http://localhost:8080/i2b2WS/rest/service/i2b2callback1/{1}',
+	  success: function(data) {
+	    alert('Load was performed.' + data);
+	  }
+	});
+	*/
+
+	}
+
+	function mvf2()
+	{
+	alert('2 =');
+	alert($j("#datatodisplay").val( $j("<div>").append( $j("#ReportTable").eq(0).clone() ).innerHTML ));
+	}
+	
+	//alert('y4');
+
+	$j('.myButton').click(function(){
+	  alert('x');
+	});
+
+	$j('#myButton2').click(function(){
+	  alert('x2');
+	});
+
+	//alert('z ' + $j('#myButton').value() + $j('#myButton').html());
+	//alert($j("#datatodisplay").html());
+
+	
+
+	
